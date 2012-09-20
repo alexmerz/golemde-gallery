@@ -1,0 +1,243 @@
+/*
+* golemgallery2.css
+*
+* Copyright (c) 2012, Klaß&Ihlenfeld Verlag GmbH, Alexander Merz. All rights reserved.
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 3 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+* MA 02110-1301 USA
+*/
+
+.golem-gallery2-nojs {
+    display:block;
+    margin:0;
+    padding:0;
+    position:relative;
+    width:620px;
+    text-align: center;
+}
+
+.golem-gallery2-nojs ul {
+    display:block;
+    margin:0;
+    padding:0;
+    list-style: none outside;
+    position:relative;
+}
+
+.golem-gallery2-nojs ul li {
+    margin:0;
+    padding:0;
+    position:relative;
+    display:none;
+}
+
+.golem-gallery2-nojs ul li.golem-gallery2-show {
+    display: block;
+}
+
+.golem-gallery2-template {
+    display:none;
+}
+
+.golem-gallery2 {
+    position:relative;
+    top:0;
+    left:0;
+    width: 620px;
+    margin: 30px 0 10px 0 !important;
+}
+
+.golem-gallery2-list {
+    position:relative;
+    margin:0 !important;
+}
+
+.golem-gallery2-list li {
+    position:relative;
+    top:0;
+    left:0;
+    list-style: none outside;
+    display:none;
+}
+
+.golem-gallery2-list li.golem-gallery2-show {
+    display:block;
+}
+
+.golem-gallery2-nav-inactive {
+    display:none;
+}
+
+.golem-gallery2-noscroll {
+    overflow:hidden;
+}
+
+.golem-gallery2.golem-gallery2-fullscreenmode {
+    width:100%;
+    height:100%;
+    background-color:black;
+    position:absolute;
+    z-index:1000;
+    text-align:center;
+    margin: 0 0 0 0 !important;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-list {
+    height:100%;
+    width:100%;
+    text-align: center;
+}
+
+
+.golem-gallery2-fullscreenmode .golem-gallery2-list li {
+    height:100%;
+    width:100%;
+    text-align: center;
+
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-list img {
+
+    max-height:100%;
+    max-width: 100%;
+    margin:auto;
+}
+
+.golem-gallery2-nav {
+    position: absolute;
+    top:-30px;
+    right:1px;
+    background-color: black;
+    color:white;
+    margin:0 !important;
+    border-radius: 10px 10px 0 0;
+    height:30px;
+}
+
+.golem-gallery2-nav li {
+    float:left;
+    margin:0;
+    padding:0 5px 0 5px;
+    height:100%;
+    vertical-align: middle;
+}
+
+li.golem-gallery2-nav-count {
+    text-align: center;
+    margin:auto;
+    padding:2px 0 0 0;
+}
+
+.golem-gallery2-nav li img {
+    height:22px;
+    width:20px;
+    margin:2px 0 0 0;
+    padding:0 5px 0 5px;
+    cursor:pointer;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-nav li {
+    float:left;
+    margin:0;
+    padding:0;
+}
+
+.golem-gallery2-fullscreenmode li.golem-gallery2-nav-count {
+    margin:2px 5px 0 5px;
+    padding:4px 4px 0 4px;
+    font-size:20px;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-nav li img{
+    height:30px;
+    margin:0;
+    padding:3px 2px 0 2px;
+}
+
+
+.golem-gallery2-footer {
+    width:100%;
+    list-style: none outside;
+    height: 30px;
+    margin-top:5px;
+}
+
+.golem-gallery2-footer-hide {
+    width:30px;
+    position:absolute;
+    left:0;
+    bottom:3px;
+}
+
+.golem-gallery2-footer-title {
+    text-align: center;
+    height:25px;
+    position:absolute;
+    left:30px;
+    bottom:0;
+    right:30px;
+}
+
+.golem-gallery2-footer-fullscreen {
+    width:30px;
+    position:absolute;
+    right:0;
+    bottom:3px;
+    cursor:pointer;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-nav {
+    top:5px !important;
+    right:5px;
+    opacity:0.5;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-footer {
+    width:100%;
+    list-style: none outside;
+    height: 30px;
+    position:absolute;
+    bottom:0;
+    color:white;
+    background-color:black;
+    opacity:0.7;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-footer-title {
+    padding-top:5px;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-footer-hide {
+    padding-left:5px;
+    cursor:pointer;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-footer-fullscreen {
+    padding-right:5px;
+}
+
+.golem-gallery2-fullscreenmode .golem-gallery2-footer-hidemode {
+    background-color: transparent;
+}
+
+
+.golem-gallery2-fullscreenmode .golem-gallery2-footer-hidemode .golem-gallery2-footer-title {
+    display:none;
+}
+
+.golem-gallery2-mouseover {
+    opacity:1 !important;
+}
+

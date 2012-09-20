@@ -1,0 +1,149 @@
+What is Golem Gallery2?
+=======================
+
+Readers of Golem.de have constantly asked for a release of
+our implementation of the image gallery used on the website.
+
+With the new version of the image gallery named Golem.Gallery2 (aka GG2)
+we fulfilled this wish and uploaded the source to GitHub.
+
+The code is povided "as is" and is licensed under the LGPL 3. Golem.de nor its
+owner, the Klaß&Ihlenfeld Verlag GmbH, will provide any support or code maintance.
+
+Features
+========
+- Fullscreen mode
+- Unlimited number of images
+- Lazy loading of images
+- Use Fullscreen-API of the browser, if available
+- Keyboard support, even for several galleries on the same page
+- Tested on FF15, IE8/9/10, Chrome21, Opera12, Safari5 on Desktop and Touch devices
+
+Caveats
+=======
+The gallery implementation was developed to work on Golem.de and had to be ajusted to
+internal requirements and some legacy stuff. It was never intended to create
+a "fit-everywhere" solution. You may need a deeper understanding on how CSS works
+to customize the gallery. The gallery initialization isn't parameterized,
+so you can't disable functions like the fullscreen mode without modifying the
+javascript class.
+
+Prerequistes
+============
+The gallery relies heavily on JQuery. We recommand version 1.8.1. Older versions
+may work.
+http://docs.jquery.com/Downloading_jQuery
+
+The gallery uses the BigScreen library to handle the Fullscreen-API across
+different browser. The library is not part of the distribution.
+http://brad.is/coding/BigScreen/
+
+You also should install a CSS Reset stylesheet.
+
+The dirs and files in this distribution
+=======================================
+css/golemgallery2.css
+Contains the stylesheet for the gallery. (Required)
+
+js/golemgallery2.js
+Contains the javascript code for the gallery. (Required)
+
+images/
+Images for the userinterface of the gallery (Required)
+
+example/
+HTML and Images for an usage example
+
+Installation
+============
+There are no special steps to follow. Just copy the "css", "js" and "images"
+directories to a place where you need them and make sure they are accessible.
+
+Setting up the HTML
+===================
+Adding 1 or more galleries to your webpage requires four steps:
+(see also example/index.html in this distribution for a complete example)
+
+1) Include the gallery javascript and css files:
+
+<link rel="stylesheet" href="css/golemgallery2.css" type="text/css"/>
+<script type="text/javascript" src="js/bigscreen.min.js"></script>
+<script type="text/javascript" src="js/golemgallery2.js"></script>
+
+2) Create the gallery placeholder for each gallery to insert (see further explanation below)
+
+<a class="golem-gallery2-nojs" href="https://github.com/alexmerz/golemde-gallery">
+    <ul>
+        <li><img src="" alt="Image 1" title="Image 1" data-src="images/img1.png" data-src-full="images/img1_big.png"></li>
+        <li class="golem-gallery2-show"><img src="images/img2.png" alt="Image 2" title="Image 2" data-src="images/img2.png" data-src-full="images/img2_big.png"></li>
+        <li><img src="" alt="Image 3" title="Image 3" data-src="images/img3.png" data-src-full="images/img3_big.png"></li>
+    </ul>
+    Image 2
+</a>
+
+3) Add the gallery template, taking the path to the image sources into account.
+The value of the src-attribute must match your directory layout!
+You need only one template even if you have several galleries on the same page!
+
+<div class="golem-gallery2-template">
+    <ul class="golem-gallery2-list"></ul>
+    <ul class="golem-gallery2-nav">
+        <li class="golem-gallery2-nav-prev"><img src="../images/left.png"></li>
+        <li class="golem-gallery2-nav-count"><span class="golem-gallery2-nav-count-current"></span> / <span class="golem-gallery2-nav-count-all"></span></li>
+        <li class="golem-gallery2-nav-next"><img src="../images/right.png"></li>
+    </ul>
+    <div class="golem-gallery2-footer">
+        <li class="golem-gallery2-footer-hide"><img src="../images/minus.png"></li>
+        <li class="golem-gallery2-footer-title"></li>
+        <li class="golem-gallery2-footer-fullscreen"><img src="../images/big.png"></li>
+    </div>
+</div>
+
+4) Add the javascript part to initialize the galleries (explanation see below)
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        Golem.Gallery2.init(function(eventData) {
+            // do something usefull if required
+        });
+    });
+</script>
+
+The gallery placeholder
+=======================
+The gallery placeholder performs 3 tasks: it marks the position of the gallery,
+houses the image data for the gallery and serves as a fallback, if javascript
+is disabled.
+
+As fallback, the whole placeholder acts as a link to an URL. On Golem.de that
+URL is a page where the gallery images can be viewed without javascript.
+
+You must provide each image of the gallery as an <LI> element and an
+<IMG> element in the placeholder. The simplest form ist:
+
+<li><img src="" alt="" title="" data-src="path/small_image" data-src-full="path/big_image"></li>
+
+The data-src attribute contains the image URL for the regular view,
+data-src-full for the fullscreen view. The attributes alt and title should be
+set. The content of title is shown as a subtitle of the image, so make sure
+html is properly encoded.
+
+To mark an image to be shown first, add the class golem-gallery2-show to
+the <LI> element and also fill the src attribute of the <IMG> element:
+<li class="golem-gallery2-show"><img src="path/small_image" alt="" title="" data-src="path/small_image" data-src-full="path/big_image"></li>
+
+If you do not provide a <LI> element with the class element, the
+first image in the list is shown.
+
+Gallery initializion
+====================
+You must call the javascript function Golem.Gallery2.init() to let the magic
+happen. Be careful, the DOM must be completely loaded, so
+put the call into a $(document).ready() call provided by JQuery:
+
+$(document).ready(function() {
+    Golem.Gallery2.init();
+});
+
+You may pass a function to the init method. This function is called, if the
+user navigates to another image in the gallery.

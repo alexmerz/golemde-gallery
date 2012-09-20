@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Golem Gallery example</title>
+        <!-- These files are *not* part of the distribution! -->
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.6.0/build/cssreset/cssreset-min.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+        <script type="text/javascript" src="../js/bigscreen.min.js"></script>
+
+        <!-- These parts are in the distribution -->
+        <link rel="stylesheet" href="../css/golemgallery2.css" type="text/css"/>
+        <script type="text/javascript" src="../js/golemgallery2.js"></script>
+    </head>
+    <body>
+        <!-- Gallery placeholder -->
+        <a class="golem-gallery2-nojs" href="https://github.com/alexmerz/golemde-gallery">
+            <ul>
+                <li><img src="" alt="Image 1" title="Image 1" data-src="images/img1.png" data-src-full="images/img1_big.png"></li>
+                <li class="golem-gallery2-show"><img src="images/img2.png" alt="Image 2" title="Image 2" data-src="images/img2.png" data-src-full="images/img2_big.png"></li>
+                <li><img src="" alt="Image 3" title="Image 3" data-src="images/img3.png" data-src-full="images/img3_big.png"></li>
+            </ul>
+            Image 2
+        </a>
+
+        <!-- Gallery template -->
+        <div class="golem-gallery2-template">
+            <ul class="golem-gallery2-list"></ul>
+            <ul class="golem-gallery2-nav">
+                <li class="golem-gallery2-nav-prev"><img src="../images/left.png"></li>
+                <li class="golem-gallery2-nav-count"><span class="golem-gallery2-nav-count-current"></span> / <span class="golem-gallery2-nav-count-all"></span></li>
+                <li class="golem-gallery2-nav-next"><img src="../images/right.png"></li>
+            </ul>
+            <div class="golem-gallery2-footer">
+                <li class="golem-gallery2-footer-hide"><img src="../images/minus.png"></li>
+                <li class="golem-gallery2-footer-title"></li>
+                <li class="golem-gallery2-footer-fullscreen"><img src="../images/big.png"></li>
+            </div>
+        </div>
+
+        <!-- Gallery init -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                Golem.Gallery2.init(function(eventData) {
+                    console.log('New image!');
+                });
+            });
+        </script>
+    </body>
+</html>
