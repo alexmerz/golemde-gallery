@@ -514,6 +514,15 @@ if (BigScreen.enabled) {
 $(document).bind('keyup', function(event) {
     var GG2g = Golem.Gallery2.galleries;
 
+    // special handling in case a gallery is in fullscreen
+    for(var i = 0, l = GG2g.length; i < l; i++) {
+        if(GG2g[i].isFullscreen) {
+            if(GG2g[i].onKey.call(GG2g, event)) {
+                break;
+            }
+        }
+    }
+
     for(var i = 0, l = GG2g.length; i < l; i++) {
         if(GG2g[i].onKey.call(GG2g, event)) {
             break;
