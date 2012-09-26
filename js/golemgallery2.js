@@ -205,11 +205,16 @@ Golem.Gallery2 = function(baseEl, eventFn) {
      */
     this.prevImage = function() {
 
+
+        if(that.imageCount < 2) {
+            return false;
+        }
+
         var current = that.baseImageUl.find('.golem-gallery2-show').first();
 
         if(0 == current.length) {
             that.assignShow();
-            return;
+            return true;
         }
 
         var prev = current.prev();
@@ -218,7 +223,7 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 
         if(0 == prev.length) {
             that.assignShow('last');
-            return;
+            return true;
         }
 
         prev.addClass('golem-gallery2-show');
@@ -238,11 +243,15 @@ Golem.Gallery2 = function(baseEl, eventFn) {
      */
     this.nextImage = function() {
 
+        if(that.imageCount < 2) {
+            return false;
+        }
+
         var current = that.baseImageUl.find('.golem-gallery2-show').first();
 
         if(0 == current.length) {
             that.assignShow();
-            return;
+            return true;
         }
 
         var next = current.next();
@@ -251,7 +260,7 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 
         if(0 == next.length) {
             that.assignShow();
-            return;
+            return true;
         }
 
         next.addClass('golem-gallery2-show');
@@ -410,10 +419,10 @@ Golem.Gallery2 = function(baseEl, eventFn) {
         {
             switch(event.keyCode) {
                 case 37: // right
-                    that.prevImage();
+                    return that.prevImage();
                     break
                 case 39: // left
-                    that.nextImage();
+                    return that.nextImage();
                     break;
                 case 27: // esc - ignore if BigScreen does the stuff
                     if(!BigScreen.enabled) {

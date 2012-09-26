@@ -72,6 +72,10 @@
     display:none;
 }
 
+.golem-gallery2-list li img {
+    margin:auto;
+}
+
 .golem-gallery2-list li.golem-gallery2-show {
     display:block;
 }
