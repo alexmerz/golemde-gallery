@@ -43,6 +43,8 @@ Golem.Gallery2 = function(baseEl, eventFn) {
     this.imageCount     = 0;
     this.isFullscreen   = false;
     this.lastPosition   = [0,0];
+    this.preloadPrev    = 1;
+    this.preloadNext    = 3;
     this.id             = 'golem-gallery2-' + Golem.Gallery2.idCounter;
     this.pageChangeFn   = null;
 
@@ -105,15 +107,36 @@ Golem.Gallery2 = function(baseEl, eventFn) {
      *          the name of the attribute to use
      */
     this.setImgSrc = function(attr) {
-        that.baseImageUl.find('img').each(function(){
-            var elI = $(this),
-                val = elI.attr(attr);
+        var showEl = that.baseImageUl.find('li.golem-gallery2-show'),
+            startEl = showEl;
 
-            if(null != val) {
-                elI.attr('src', val);
+        function _set(el) {
+            var imgEl = el.find('img');
+
+            if(0 == imgEl.length) return;
+
+            var curSrc = imgEl.attr('src'),
+                newSrc = imgEl.attr(attr);
+
+            if('' == curSrc || curSrc != newSrc) {
+                imgEl.attr('src', newSrc);
             }
+        }
 
-        });
+        _set(showEl);
+
+        for(var i = 0; i < that.preloadNext; i++) {
+            showEl = showEl.next();
+            _set(showEl);
+        }
+
+        showEl = startEl;
+
+        for(var i = 0; i < that.preloadPrev; i++) {
+            showEl = showEl.prev();
+            _set(showEl);
+        }
+
     };
 
     /**
@@ -231,7 +254,7 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 
         that.onPageChange();
 
-
+        return true;
     }
 
     /**
@@ -267,6 +290,8 @@ Golem.Gallery2 = function(baseEl, eventFn) {
         that.updateUi();
 
         that.onPageChange();
+
+        return true;
     }
 
     /**
@@ -309,6 +334,9 @@ Golem.Gallery2 = function(baseEl, eventFn) {
      * (Title/Counter)
      */
     this.updateUi = function() {
+
+        that.setImgSrc((that.isFullscreen)?'data-src-full':'data-src');
+
         that.updateCounter();
         that.updateTitle();
     };
@@ -482,7 +510,7 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 Golem.Gallery2.init = function(eventFn){
     $('.golem-gallery2-nojs').each(function(){
         var gg2 = new Golem.Gallery2(this, eventFn);
-        Golem.Gallery2.gallerys.push(gg2);
+        Golem.Gallery2.galleries.push(gg2);
     });
 };
 
@@ -527,7 +555,7 @@ $(document).bind('keyup', function(event) {
     for(var i = 0, l = GG2g.length; i < l; i++) {
         if(GG2g[i].isFullscreen) {
             if(GG2g[i].onKey.call(GG2g, event)) {
-                break;
+                return;
             }
         }
     }
