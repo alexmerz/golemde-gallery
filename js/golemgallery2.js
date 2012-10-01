@@ -95,6 +95,18 @@ Golem.Gallery2 = function(baseEl, eventFn) {
         that.baseImageUl    = elUl;
         that.imageCount     = elUl.find('li').length;
 
+        that.baseEl.find('li').each(function(){
+            var el = $(this),
+                tcEl = $('<div>');
+
+            tcEl.html(el.html());
+            tcEl.addClass('golem-gallery2-inneritem');
+
+            el.empty();
+            el.append(tcEl);
+
+        });
+
     };
 
     /**
@@ -119,6 +131,17 @@ Golem.Gallery2 = function(baseEl, eventFn) {
                 newSrc = imgEl.attr(attr);
 
             if('' == curSrc || curSrc != newSrc) {
+
+                imgEl[0].onload = function(){
+                        if(that.isFullscreen) {
+                            that._updateInneritem();
+                        }};
+
+                if(that.isFullscreen) {
+                    imgEl[0].maxWidth = '' +$(window).width() + 'px';
+                }
+
+                imgEl.attr('src', '');
                 imgEl.attr('src', newSrc);
             }
         }
@@ -127,14 +150,22 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 
         for(var i = 0; i < that.preloadNext; i++) {
             showEl = showEl.next();
-            _set(showEl);
+            if(showEl) {
+                _set(showEl);
+            } else {
+                break;
+            }
         }
 
         showEl = startEl;
 
         for(var i = 0; i < that.preloadPrev; i++) {
             showEl = showEl.prev();
-            _set(showEl);
+            if(showEl) {
+                _set(showEl);
+            } else {
+                break;
+            }
         }
 
     };
@@ -252,6 +283,12 @@ Golem.Gallery2 = function(baseEl, eventFn) {
         prev.addClass('golem-gallery2-show');
         that.updateUi();
 
+        if(that.isFullscreen) {
+            that._updateInneritem();
+        } else {
+            $('.golem-gallery2-show .golem-gallery2-inneritem').attr('style','');
+        }
+
         that.onPageChange();
 
         return true;
@@ -288,6 +325,13 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 
         next.addClass('golem-gallery2-show');
         that.updateUi();
+
+        if(that.isFullscreen) {
+            that._updateInneritem();
+        } else {
+            $('.golem-gallery2-show .golem-gallery2-inneritem').attr('style','');
+        }
+
 
         that.onPageChange();
 
@@ -361,15 +405,16 @@ Golem.Gallery2 = function(baseEl, eventFn) {
 
         if(BigScreen.enabled) {
             BigScreen.toggle(that.baseEl[0]);
+            BigScreen.onenter = function(){that._updateInneritem()};
         }
 
-        if(that.isFullscreen) {
+        that.isFullscreen = !that.isFullscreen;
+
+        if(!that.isFullscreen) {
             that.hideFullscreen();
         } else {
             that.showFullscreen();
         }
-
-        that.isFullscreen = !that.isFullscreen;
 
     }
 
@@ -386,9 +431,10 @@ Golem.Gallery2 = function(baseEl, eventFn) {
         that.baseEl.addClass('golem-gallery2-fullscreenmode');
         that.baseEl.find('.golem-gallery2-footer-fullscreen img').attr('src', Golem.Gallery2.ICON_SMALL);
 
+        $('body').addClass('golem-gallery2-noscroll');
         that.setImgSrc('data-src-full');
 
-        $('body').addClass('golem-gallery2-noscroll');
+        that._updateInneritem();
 
     }
 
@@ -400,6 +446,8 @@ Golem.Gallery2 = function(baseEl, eventFn) {
     this.hideFullscreen = function() {
 
         var elFs = $('.golem-gallery2-fullscreenmode');
+
+        $('.golem-gallery2-inneritem').attr('style','');
 
         that.setImgSrc('data-src');
 
@@ -473,6 +521,30 @@ Golem.Gallery2 = function(baseEl, eventFn) {
     this.onResize = function(event) {
         // hack for IE10/tablets to force recalc
         that.baseEl.css('display', 'block');
+
+        if(that.isFullscreen) {
+            that._updateInneritem();
+      } else {
+            $('.golem-gallery2-show .golem-gallery2-inneritem').attr('style','');
+        }
+
+        return false;
+    }
+
+    /**
+     * Golem.Gallery2._updateInneritem
+     *
+     * Helper method to force the correct alignment
+     * of the image
+     */
+    this._updateInneritem = function() {
+        var h = $(window).height(),
+            w = $(window).width();
+
+        // max-width and max-height must be set to a specific value
+        // because of Opera bug
+        $('.golem-gallery2-show .golem-gallery2-inneritem').attr('style',
+                'display:table-cell;text-align:center;vertical-align:middle;width:'+w+'px;height:'+h+'px;max-width:'+w+'px;max-height:'+h+';');
     }
 
     /**
@@ -528,8 +600,8 @@ Golem.Gallery2.galleries    = [];
 /**
  * URLs of the images for the fullscreen button
  */
-Golem.Gallery2.ICON_SMALL   = '../images/small.png';
-Golem.Gallery2.ICON_BIG     = '../images/big.png';
+Golem.Gallery2.ICON_SMALL   = 'http://www.golem.de/staticrl/images/icon-ggfs_b2.png';
+Golem.Gallery2.ICON_BIG     = 'http://www.golem.de/staticrl/images/icon-ggfs_w2.png';
 
 /**
  * Check if browser provides Fullscreen API support

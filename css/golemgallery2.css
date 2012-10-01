@@ -1,24 +1,3 @@
-/*
-* golemgallery2.css
-*
-* Copyright (c) 2012, Klaß&Ihlenfeld Verlag GmbH, Alexander Merz. All rights reserved.
-*
-* This library is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public
-* License as published by the Free Software Foundation; either
-* version 3 of the License, or (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-* MA 02110-1301 USA
-*/
-
 .golem-gallery2-nojs {
     display:block;
     margin:0;
@@ -104,19 +83,17 @@
     text-align: center;
 }
 
-
 .golem-gallery2-fullscreenmode .golem-gallery2-list li {
     height:100%;
     width:100%;
     text-align: center;
-
 }
 
 .golem-gallery2-fullscreenmode .golem-gallery2-list img {
-
     max-height:100%;
     max-width: 100%;
     margin:auto;
+    position:relative;
 }
 
 .golem-gallery2-nav {
